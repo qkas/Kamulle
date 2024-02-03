@@ -1,21 +1,37 @@
-var yesButton = document.getElementById('yes-button');
-var noButton = document.getElementById('no-button');
+const yesButton = document.getElementById('yes-button');
+const noButton = document.getElementById('no-button');
+const message = document.getElementById('message');
+
+let noClicked = 0;
 
 yesButton.addEventListener('click', function() {
-    var audio = new Audio("yippee.mp3");
+    const audio = new Audio("yippee.mp3");
     audio.play();
+    message.style.display = 'flex'
+
+    noButton.style.visibility = 'hidden';
+    yesButton.style.visibility = 'hidden';
 });
 
 noButton.addEventListener('click', function() {
-    var audio = new Audio("pop.mp3");
-    audio.play();
-    
-    noButton.style.position = 'absolute';
+    if (noClicked <= 3) {
+        const audio = new Audio("pop.mp3");
+        audio.play();
 
-    const randomX = Math.floor(Math.random() * window.innerWidth - 50);
-    const randomY = Math.floor(Math.random() * window.innerHeight) -50;
+        noButton.style.position = 'absolute';
 
-    noButton.style.left = `${randomX}px`;
-    noButton.style.top = `${randomY}px`;
+        const maxX = window.innerWidth - noButton.clientWidth -50;
+        const maxY = window.innerHeight - noButton.clientHeight -50;
+
+        const randomX = Math.floor(Math.random() * maxX);
+        const randomY = Math.floor(Math.random() * maxY);
+
+        noButton.style.left = `${randomX}px`;
+        noButton.style.top = `${randomY}px`;
+    } else {
+        noButton.style.display = 'none';
+        alert('no choice :3')
+    }
+    noClicked++
 });
 
